@@ -4,7 +4,7 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
@@ -18,7 +18,7 @@ function embed_google_fonts_enqueue() {
 
     // Lucid Theme
     wp_enqueue_style('google_font_open_sans', $base_url . 'open-sans/open-sans.css', array(), '15');
-    wp_enqueue_style('google_font_open_sans_condensed', $base_url . 'open-sans/open-sans.css', array(), '15');
+    wp_enqueue_style('google_font_open_sans_condensed', $base_url . 'open-sans-condensed/open-sans-condensed.css', array(), '12');
 }
 
 /**
