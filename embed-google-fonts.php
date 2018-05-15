@@ -17,8 +17,8 @@ function embed_google_fonts_enqueue() {
     wp_register_style('rgf-open-sans', $base_url . 'open-sans/open-sans.css', array(), '15');
 
     // Lucid Theme
-    wp_enqueue_style('google_font_open_sans', $base_url . 'open-sans.css', array(), '15');
-    wp_enqueue_style('google_font_open_sans_condensed', $base_url . 'open-sans.css', array(), '15');
+    wp_enqueue_style('google_font_open_sans', $base_url . 'open-sans/open-sans.css', array(), '15');
+    wp_enqueue_style('google_font_open_sans_condensed', $base_url . 'open-sans/open-sans.css', array(), '15');
 }
 
 /**
