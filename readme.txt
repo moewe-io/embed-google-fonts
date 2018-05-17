@@ -3,8 +3,8 @@ Contributors: adrian2k7
 Tags: quform
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
-Tested up to: 4.6
-Stable tag: 1.0.0
+Tested up to: 5.0
+Stable tag: 1.1.0
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
