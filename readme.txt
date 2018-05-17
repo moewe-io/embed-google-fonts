@@ -4,7 +4,7 @@ Tags: quform
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
@@ -13,11 +13,19 @@ Quick and dirty helper plugin for embedding Google fonts, basically developed fo
 == Description ==
 Quick and dirty helper plugin for embedding Google fonts, basically developed for us and our customers.
 
-**Note** This doesn't automatically replaces all your Google fonts with local versions, only what we've programmed in.
-
 Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 
+**Notes**
+
+* This is not optimized in any way
+* This doesn't automatically replaces all your Google fonts with local versions. Only these weve contained and which can be replaced the method we used.
+* Droid Sans is replaced with Noto Sans
+
 == Changelog ==
+
+= 1.1.5 =
+
+* Added some fonts
 
 = 1.1.4 =
 
