@@ -29,7 +29,7 @@ class Embed_Google_Fonts {
 
 
     function enqueue() {
-        $base_url = plugins_url() . '/embed-google-fonts/fonts/';
+        $base_url = plugins_url('/embed-google-fonts/fonts/', __FILE__);
 
         foreach ($this->embedded_fonts as $name => $version) {
             $slug = apply_filters('embed_google_fonts_get_slug', $name);

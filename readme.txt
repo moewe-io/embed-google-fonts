@@ -4,7 +4,7 @@ Tags: quform
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
@@ -18,6 +18,10 @@ Quick and dirty helper plugin for embedding Google fonts, basically developed fo
 Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 
 == Changelog ==
+
+= 1.1.3 =
+
+* Improved url loading
 
 = 1.1.2 =
 
