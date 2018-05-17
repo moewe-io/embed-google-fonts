@@ -4,7 +4,7 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
@@ -21,8 +21,10 @@ class Embed_Google_Fonts {
         'Merriweather Sans'   =>  '9',
         'Noto Sans'           =>  '7',
         'Noto Serif'          =>  '6',
+        'Nunito'              =>  '9',
         'Open Sans'           =>  '15',
-        'Open Sans Condensed' =>  '12'
+        'Open Sans Condensed' =>  '12',
+        'Raleway'             =>  '12'
     );
 
     function __construct() {
