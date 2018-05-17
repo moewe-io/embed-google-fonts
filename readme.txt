@@ -15,7 +15,13 @@ Quick and dirty helper plugin for embedding Google fonts, basically developed fo
 
 **Note** This doesn't automatically replaces all your Google fonts with local versions, only what we've programmed in.
 
+Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
+
 == Changelog ==
+
+= 1.1.0 =
+
+* Generic replacement of enqueued fonts
 
 = 1.0.0 =
 
