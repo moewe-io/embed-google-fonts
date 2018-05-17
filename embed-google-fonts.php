@@ -34,7 +34,7 @@ class Embed_Google_Fonts {
         foreach ($this->embedded_fonts as $name => $version) {
             $slug = apply_filters('embed_google_fonts_get_slug', $name);
             $handle = apply_filters('embed_google_fonts_get_handle', $name);
-            wp_register_style($handle, $base_url . $slug . '/font.css', array(), $version);
+            wp_register_style($handle, $base_url . $slug . '/_font.css', array(), $version);
         }
     }
 
