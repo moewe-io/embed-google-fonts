@@ -4,13 +4,13 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define('EMBED_GOOGLE_FONTS_VERSION', '1.2.2');
+define('EMBED_GOOGLE_FONTS_VERSION', '1.2.3');
 
 class Embed_Google_Fonts {
 
@@ -27,7 +27,7 @@ class Embed_Google_Fonts {
         /** @var WP_Filesystem_Base $wp_filesystem */
         global $wp_filesystem;
         if (empty($wp_filesystem)) {
-            require_once (ABSPATH . '/wp-admin/includes/file.php');
+            require_once(ABSPATH . '/wp-admin/includes/file.php');
             WP_Filesystem();
         }
 
@@ -78,11 +78,9 @@ class Embed_Google_Fonts {
 
 new Embed_Google_Fonts();
 
-// Memorable theme (from Woothemes)
-add_action('woo_head', function () {
-    remove_action('woo_head', 'appply_custom_fonts', 10);
-    wp_enqueue_style(apply_filters('embed_google_fonts_get_handle', 'Merriweather Sans'));
-}, 0);
+// specific theme and plugin support
+include 'includes/avada.php';
+include 'includes/memorable.php';
 
 // Updates
 require 'libs/plugin-update-checker-4.4/plugin-update-checker.php';
