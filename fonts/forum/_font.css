@@ -1,0 +1,13 @@
+/* forum-regular - cyrillic_cyrillic-ext_latin_latin-ext */
+@font-face {
+    font-family: 'Forum';
+    font-style: normal;
+    font-weight: 400;
+    src: url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.eot'); /* IE9 Compat Modes */
+    src: local('Forum'),
+    url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.woff') format('woff'), /* Modern Browsers */
+    url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('forum-v8-cyrillic_cyrillic-ext_latin_latin-ext-regular.svg#Forum') format('svg'); /* Legacy iOS */
+}
