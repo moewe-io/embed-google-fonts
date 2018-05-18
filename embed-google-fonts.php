@@ -4,28 +4,15 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.1.6
+ * Version: 1.2
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
+define('EMBED_GOOGLE_FONTS_VERSION', '1.2');
 
 class Embed_Google_Fonts {
-    /** @var array Name => Version */
-    private $embedded_fonts = array(
-        'Droid Sans'          =>  '7-noto-sans',
-        'Droid Serif'         =>  '6-noto-serif',
-        'Lato'                =>  '14',
-        'Merriweather'        =>  '19',
-        'Merriweather Sans'   =>  '9',
-        'Noto Sans'           =>  '7',
-        'Noto Serif'          =>  '6',
-        'Nunito'              =>  '9',
-        'Open Sans'           =>  '15',
-        'Open Sans Condensed' =>  '12',
-        'Raleway'             =>  '12'
-    );
 
     function __construct() {
         add_action('wp_enqueue_scripts', [$this, 'enqueue'], 0);
@@ -37,12 +24,15 @@ class Embed_Google_Fonts {
 
 
     function enqueue() {
-        $base_url = plugins_url('/fonts/', __FILE__);
+        /** @var WP_Filesystem_Base $wp_filesystem */
+        global $wp_filesystem;
 
-        foreach ($this->embedded_fonts as $name => $version) {
-            $slug = apply_filters('embed_google_fonts_get_slug', $name);
-            $handle = apply_filters('embed_google_fonts_get_handle', $name);
-            wp_register_style($handle, $base_url . $slug . '/_font.css', array(), $version);
+        $base_url = plugins_url('/fonts/', __FILE__);
+        $fonts = $wp_filesystem->dirlist(plugin_dir_path(__FILE__) . '/fonts', false, false);
+
+        foreach ($fonts as $font) {
+            $handle = apply_filters('embed_google_fonts_get_handle', $font['name']);
+            wp_register_style($handle, $base_url . $font['name'] . '/_font.css', false, EMBED_GOOGLE_FONTS_VERSION);
         }
     }
 
@@ -51,19 +41,25 @@ class Embed_Google_Fonts {
         /** @var _WP_Dependency $dependency */
         foreach ($wp_styles->registered as $key => $dependency) {
             // Example https://fonts.googleapis.com/css?family=Lato:300
-            if (strpos($dependency->src, 'fonts.googleapis.com') !== false) {
-                $query = wp_parse_url($dependency->src, PHP_URL_QUERY);
-                $query = wp_parse_args($query, array());
-                $family = explode(':', $query['family'])[0];
-                if (array_key_exists($family, $this->embedded_fonts)) {
-                    $wp_styles->remove($key);
-                    $wp_styles->dequeue($key);
+            if (strpos($dependency->src, 'fonts.googleapis.com') === false) {
+                continue;
+            }
+            $query = wp_parse_url($dependency->src, PHP_URL_QUERY);
+            $query = wp_parse_args($query, array());
+            $families = explode('|', $query['family']);
+            foreach ($families as $family) {
+                $family = explode(':', $family)[0];
+                $slug = apply_filters('embed_google_fonts_get_slug', $family);
+                if (is_file(plugin_dir_path(__FILE__) . '/fonts/' . $slug . '/_font.css')) {
                     $handle = apply_filters('embed_google_fonts_get_handle', $family);
                     wp_enqueue_style($handle);
                 } else {
                     error_log('Missing font family: ' . $family);
                 }
-            };
+            }
+            // Remove original Google font from styles
+            $wp_styles->remove($key);
+            $wp_styles->dequeue($key);
         }
     }
 
@@ -72,17 +68,17 @@ class Embed_Google_Fonts {
     }
 
     function get_handle($name = '') {
-        return 'embed-google-font-' . apply_filters('embed_google_fonts_get_slug', $name);
+        return 'embed-google-fonts-' . apply_filters('embed_google_fonts_get_slug', $name);
     }
 }
 
 new Embed_Google_Fonts();
 
 // Memorable theme (from Woothemes)
-add_action( 'woo_head', function(){
-    remove_action('woo_head','appply_custom_fonts', 10);
+add_action('woo_head', function () {
+    remove_action('woo_head', 'appply_custom_fonts', 10);
     wp_enqueue_style(apply_filters('embed_google_fonts_get_handle', 'Merriweather Sans'));
-},0);
+}, 0);
 
 // Updates
 require 'libs/plugin-update-checker-4.4/plugin-update-checker.php';

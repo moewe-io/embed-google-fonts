@@ -23,6 +23,10 @@ Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 
 == Changelog ==
 
+= 1.2 =
+
+* Use filesystem for detecting embedded fonts
+
 = 1.1.6 =
 
 * Added Nunito and Raleway
