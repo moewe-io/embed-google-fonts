@@ -4,13 +4,13 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define('EMBED_GOOGLE_FONTS_VERSION', '1.2.1');
+define('EMBED_GOOGLE_FONTS_VERSION', '1.2.2');
 
 class Embed_Google_Fonts {
 
@@ -26,6 +26,10 @@ class Embed_Google_Fonts {
     function enqueue() {
         /** @var WP_Filesystem_Base $wp_filesystem */
         global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once (ABSPATH . '/wp-admin/includes/file.php');
+            WP_Filesystem();
+        }
 
         $base_url = plugins_url('/fonts/', __FILE__);
         $fonts = $wp_filesystem->dirlist(plugin_dir_path(__FILE__) . '/fonts', false, false);
