@@ -4,44 +4,28 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 1.2.6
+ * Version: 1.3.0
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define('EMBED_GOOGLE_FONTS_VERSION', '1.2.6');
+define('EMBED_GOOGLE_FONTS_VERSION', '1.3.0');
 
 class Embed_Google_Fonts {
 
     function __construct() {
-        add_action('wp_enqueue_scripts', [$this, 'enqueue'], 0);
         add_action('wp_enqueue_scripts', [$this, 'replace_queued_sources'], PHP_INT_MAX);
 
         add_filter('embed_google_fonts_get_slug', [$this, 'get_slug'], 10, 1);
         add_filter('embed_google_fonts_get_handle', [$this, 'get_handle'], 10, 1);
     }
 
-
-    function enqueue() {
-        /** @var WP_Filesystem_Base $wp_filesystem */
-        global $wp_filesystem;
-        if (empty($wp_filesystem)) {
-            require_once(ABSPATH . '/wp-admin/includes/file.php');
-            WP_Filesystem();
-        }
-
-        $base_url = plugins_url('/fonts/', __FILE__);
-        $fonts = $wp_filesystem->dirlist(plugin_dir_path(__FILE__) . '/fonts', false, false);
-
-        foreach ($fonts as $font) {
-            $handle = apply_filters('embed_google_fonts_get_handle', $font['name']);
-            wp_register_style($handle, $base_url . $font['name'] . '/_font.css', false, EMBED_GOOGLE_FONTS_VERSION);
-        }
-    }
-
     function replace_queued_sources() {
         $wp_styles = wp_styles();
+        $base_url = plugins_url('/fonts/', __FILE__);
+        $base_path = plugin_dir_path(__FILE__) . '/fonts/';
+
         /** @var _WP_Dependency $dependency */
         foreach ($wp_styles->registered as $key => $dependency) {
             // Example https://fonts.googleapis.com/css?family=Lato:300
@@ -54,9 +38,9 @@ class Embed_Google_Fonts {
             foreach ($families as $family) {
                 $family = explode(':', $family)[0];
                 $slug = apply_filters('embed_google_fonts_get_slug', $family);
-                if (is_file(plugin_dir_path(__FILE__) . '/fonts/' . $slug . '/_font.css')) {
+                if (is_file($base_path . $slug . '/_font.css')) {
                     $handle = apply_filters('embed_google_fonts_get_handle', $family);
-                    wp_enqueue_style($handle);
+                    wp_enqueue_style($handle, $base_url . $slug . '/_font.css', false, EMBED_GOOGLE_FONTS_VERSION);
                 } else {
                     error_log('Missing font family: ' . $family);
                 }
