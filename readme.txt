@@ -4,7 +4,7 @@ Tags: quform
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
@@ -22,6 +22,10 @@ Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 * Droid Sans is replaced with Noto Sans
 
 == Changelog ==
+
+= 1.3.2 =
+
+* Improved theme compatibility (Elmastudio)
 
 = 1.3.1 =
 
