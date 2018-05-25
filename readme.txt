@@ -23,6 +23,14 @@ Fonts where downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 
 == Changelog ==
 
+= 1.3.2 =
+
+* Improved theme compatibility (Elmastudio)
+
+= 1.3.1 =
+
+* Added Source Sans Pro and Anton
+
 = 1.3.1 =
 
 * Added Work Sans and Karla
