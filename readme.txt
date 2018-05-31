@@ -21,8 +21,7 @@ Fonts are downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 **Notes**
 
 * This is not optimized in any way
-* This doesn't automatically replaces all your Google fonts with local versions. Only these weve contained and which can be replaced the method we used.
-* Droid Sans is replaced with Noto Sans
+* This doesn't automatically replaces all your Google fonts with local versions. If a plugin/theme doens't use WordPress wp_enqueue_style it propably won't work.
 
 == Changelog ==
 
