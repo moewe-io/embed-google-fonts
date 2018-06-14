@@ -4,13 +4,13 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define('EMBED_GOOGLE_FONTS_VERSION', '2.0.4');
+define('EMBED_GOOGLE_FONTS_VERSION', '2.0.5');
 
 class Embed_Google_Fonts {
 
@@ -166,11 +166,3 @@ new Embed_Google_Fonts();
 // specific theme and plugin support
 include 'includes/avada.php';
 include 'includes/memorable.php';
-
-// Updates
-require 'libs/plugin-update-checker-4.4/plugin-update-checker.php';
-Puc_v4_Factory::buildUpdateChecker(
-    'https://github.com/moewe-io/embed-google-fonts/',
-    __FILE__,
-    'embed-google-fonts'
-)->setBranch('master');

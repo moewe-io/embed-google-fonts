@@ -1,29 +1,53 @@
 === Embed Google Fonts ===
-Contributors: adrian2k7
-Tags: quform
+Contributors: adrian2k7,moewe
+Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 2.0.4
+Tested up to: 4.9.6
+Stable tag: 2.0.5
+Requires PHP: 7.0
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
-Helper plugin for embedding Google fonts, basically developed for us and our customers.
+Embed Google Fonts tries to automatically replace registered Google Fonts from themes and plugin with local versions, directly loaded from your own server.
 
 == Description ==
 
-**Use on your own risk**
+Embed Google Fonts tries to automatically replace registered Google Fonts from themes and plugins with local versions, directly loaded from your own server.
 
-Helper plugin for embedding Google fonts, basically developed for us and our customers.
-
-Fonts are downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
+**Contribute**: [https://github.com/moewe-io/embed-google-fonts](https://github.com/moewe-io/embed-google-fonts)
 
 **Notes**
 
-* This is not optimized in any way
+* The first request might be slow, as fonts are downloaded and cached the first time they are requested.
 * This doesn't automatically replaces all your Google fonts with local versions. If a plugin/theme doens't use WordPress wp_enqueue_style it propably won't work.
+* Loaded fonts are not optimized, means, the whole font including all subsets is loaded
+
+**Thank you:** Fonts are downloaded using: [https://google-webfonts-helper.herokuapp.com/fonts](https://google-webfonts-helper.herokuapp.com/fonts)
+
+== Frequently Asked Questions ==
+
+= Does this work with every theme and plugin? =
+
+No, themes and plugins must use wp_enqueue_style to load Google Fonts.
+
+= Does it work with WP Fastest Cache? =
+
+If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "_font.css"
+
+== Upgrade Notice ==
+
+Nothing special
+
+== Screenshots ==
+
+There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 2.0.5 =
+
+* Prepared for first public release
 
 = 2.0.4 =
 
@@ -35,7 +59,7 @@ Fonts are downloaded using: https://google-webfonts-helper.herokuapp.com/fonts
 
 = 2.0.2 =
 
-* Fixed downlad url
+* Fixed download url
 
 = 2.0.1 =
 
