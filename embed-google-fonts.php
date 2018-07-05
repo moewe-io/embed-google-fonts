@@ -4,13 +4,13 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.0.5
+ * Version: 2.1.0
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define('EMBED_GOOGLE_FONTS_VERSION', '2.0.5');
+define('EMBED_GOOGLE_FONTS_VERSION', '2.1.0');
 
 class Embed_Google_Fonts {
 
@@ -38,7 +38,7 @@ class Embed_Google_Fonts {
             $query = wp_parse_args($query, array());
             $families = explode('|', $query['family']);
             foreach ($families as $family) {
-                if(empty($family)){
+                if (empty($family)) {
                     continue;
                 }
                 $family = explode(':', $family)[0];
@@ -95,14 +95,11 @@ class Embed_Google_Fonts {
             'filename' => $download_target
         ));
 
-        $zip = new ZipArchive;
-        $res = $zip->open($download_target);
-        if ($res === true) {
-            $zip->extractTo($directory);
-            $zip->close();
-            unlink($download_target);
-        } else {
-            error_log("error extracting font file");
+        $unzipfile = unzip_file($download_target, $directory);
+        unlink($download_target);
+        if (is_wp_error($unzipfile)) {
+            /** @var WP_Error $unzipfile */
+            error_log("Error extracting font file: " . $unzipfile->get_error_message());
             return false;
         }
 
