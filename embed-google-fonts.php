@@ -38,6 +38,9 @@ class Embed_Google_Fonts {
             $query = wp_parse_args($query, array());
             $families = explode('|', $query['family']);
             foreach ($families as $family) {
+                if(empty($family)){
+                    continue;
+                }
                 $family = explode(':', $family)[0];
                 $slug = apply_filters('embed_google_fonts_get_slug', $family);
                 if (!is_file($base_path . $slug . '/_font.css')) {
@@ -78,7 +81,6 @@ class Embed_Google_Fonts {
             return false;
         }
         $font_definition = json_decode($response['body']); // use the content
-
         $download_url = add_query_arg(array(
             'download' => 'zip',
             'subsets'  => join(",", $font_definition->subsets),

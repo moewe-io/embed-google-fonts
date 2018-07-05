@@ -1,10 +1,10 @@
 === Embed Google Fonts ===
-Contributors: adrian2k7,moewe
+Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 Requires PHP: 7.0
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -44,6 +44,10 @@ Nothing special
 There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 2.0.6 =
+
+* Fixed bug in family detection
 
 = 2.0.5 =
 
