@@ -45,6 +45,13 @@ There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
 
+= 2.2.0 =
+
+* Minor improvements
+* Downloaded fonts will be cleared every 30 days automatically
+* Downloaded fonts will be cleared, when "entire cache" is cleared in WP Rocket
+* Downloaded fonts will be cleared, when cache is cleared in WP Fastest Cache
+
 = 2.1.0 =
 
 * Improved hoster compatible (used WordPress unzip_file)
