@@ -73,7 +73,7 @@ class Embed_Google_Fonts {
         if ( is_file( $directory . 'font.css' ) && filemtime( $directory . 'font.css' ) > $max_age ) {
             return true;
         }
-        $this->clear_cache( $directory );
+        $this->rrmdir( $directory );
         if ( ! wp_mkdir_p( $directory ) ) {
             error_log( 'Error creating needed directory: ' . $directory );
             return false;
