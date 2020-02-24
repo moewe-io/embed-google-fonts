@@ -5,6 +5,7 @@
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
  * Version: 2.2.0
+ * Requires PHP: 7.0
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
@@ -29,7 +30,7 @@ class Embed_Google_Fonts {
     function replace_queued_sources() {
         $wp_styles = wp_styles();
         $base_url = content_url( '/cache/embed-google-fonts/' );
-        $get_base_directory = apply_filters( 'embed_google_fonts_get_base_directory', false );
+        $base_directory = apply_filters( 'embed_google_fonts_get_base_directory', false );
 
         /** @var _WP_Dependency $dependency */
         foreach ( $wp_styles->registered as $key => $dependency ) {
@@ -46,9 +47,9 @@ class Embed_Google_Fonts {
                 }
                 $family = explode( ':', $family )[0];
                 $slug = apply_filters( 'embed_google_fonts_get_slug', $family );
-                $this->download_font( $get_base_directory, $slug );
+                $this->download_font( $base_directory, $slug );
                 $handle = apply_filters( 'embed_google_fonts_get_handle', $family );
-                wp_enqueue_style( $handle, $base_url . $slug . '/font.css', false, filemtime( $get_base_directory . $slug . '/font.css' ) );
+                wp_enqueue_style( $handle, $base_url . $slug . '/font.css', false, filemtime( $base_directory . $slug . '/font.css' ) );
             }
             // Remove original Google font from styles
             $wp_styles->remove( $key );
@@ -72,8 +73,7 @@ class Embed_Google_Fonts {
         if ( is_file( $directory . 'font.css' ) && filemtime( $directory . 'font.css' ) > $max_age ) {
             return true;
         }
-
-        ( new WP_Filesystem_Direct( [] ) )->rmdir( $directory, true );
+        $this->clear_cache( $directory );
         if ( ! wp_mkdir_p( $directory ) ) {
             error_log( 'Error creating needed directory: ' . $directory );
             return false;
@@ -95,7 +95,7 @@ class Embed_Google_Fonts {
             'subsets'  => join( ",", $font_definition->subsets ),
         ), $api_url );
 
-        $download_target = $directory . '_font.zip';
+        $download_target = $directory . 'font.zip';
 
         // Download the fonts
         wp_remote_get( $download_url, array(
@@ -104,6 +104,8 @@ class Embed_Google_Fonts {
             'filename' => $download_target
         ) );
 
+        require_once( ABSPATH . '/wp-admin/includes/file.php' );
+        WP_Filesystem( false, $directory );
         $unzipfile = unzip_file( $download_target, $directory );
         unlink( $download_target );
         if ( is_wp_error( $unzipfile ) ) {
@@ -181,8 +183,27 @@ class Embed_Google_Fonts {
         if ( apply_filters( 'embed_google_fonts_disable_clear_cache', false ) ) {
             return;
         }
-        $base_directory = apply_filters( 'embed_google_fonts_get_base_directory', false );
-        ( new WP_Filesystem_Direct( [] ) )->rmdir( $base_directory, true );
+        $directory = apply_filters( 'embed_google_fonts_get_base_directory', false );
+        $this->rrmdir( $directory );
+    }
+
+    // Thanks: https://stackoverflow.com/a/3338133/1165132
+    function rrmdir( $directory ) {
+        if ( ! is_dir( $directory ) ) {
+            error_log( "Not a directory: " . $directory );
+            return;
+        }
+        $objects = scandir( $directory );
+        foreach ( $objects as $object ) {
+            if ( $object != "." && $object != ".." ) {
+                if ( is_dir( $directory . DIRECTORY_SEPARATOR . $object ) && ! is_link( $directory . "/" . $object ) ) {
+                    $this->rrmdir( $directory . DIRECTORY_SEPARATOR . $object );
+                } else {
+                    unlink( $directory . DIRECTORY_SEPARATOR . $object );
+                }
+            }
+        }
+        rmdir( $directory );
     }
 }
 
