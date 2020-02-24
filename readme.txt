@@ -4,7 +4,7 @@ Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 Requires PHP: 7.0
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
