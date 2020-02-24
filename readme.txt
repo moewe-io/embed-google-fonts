@@ -2,8 +2,8 @@
 Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
-Requires at least: 4.0
-Tested up to: 4.9.6
+Requires at least: 5.0
+Tested up to: 5.3.2
 Stable tag: 2.2.0
 Requires PHP: 7.0
 License: GPL v3
