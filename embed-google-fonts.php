@@ -49,7 +49,7 @@ class Embed_Google_Fonts {
                 $slug = apply_filters( 'embed_google_fonts_get_slug', $family );
                 $this->download_font( $base_directory, $slug );
                 $handle = apply_filters( 'embed_google_fonts_get_handle', $family );
-                wp_enqueue_style( $handle, $base_url . $slug . '/font.css', false, filemtime( $base_directory . $slug . '/font.css' ) );
+                wp_enqueue_style( $handle, $base_url . $slug . '/_font.css', false, filemtime( $base_directory . $slug . '/_font.css' ) );
             }
             // Remove original Google font from styles
             $wp_styles->remove( $key );
@@ -70,7 +70,7 @@ class Embed_Google_Fonts {
         $expiration_time_in_seconds = apply_filters( 'embed_google_fonts_expiration_time_in_seconds', MONTH_IN_SECONDS );
         $max_age = time() - $expiration_time_in_seconds;
 
-        if ( is_file( $directory . 'font.css' ) && filemtime( $directory . 'font.css' ) > $max_age ) {
+        if ( is_file( $directory . '_font.css' ) && filemtime( $directory . '_font.css' ) > $max_age ) {
             return true;
         }
         $this->rrmdir( $directory );
@@ -114,7 +114,7 @@ class Embed_Google_Fonts {
             return false;
         }
 
-        $css_file = $directory . 'font.css';
+        $css_file = $directory . '_font.css';
 
         ob_start();
         foreach ( $font_definition->variants as $variant ) {
