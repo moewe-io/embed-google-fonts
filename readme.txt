@@ -45,6 +45,10 @@ There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
 
+= 2.2.1 =
+
+* Reverted file name of font.css to _font.css (for simpler WP Fastest Cache exclusion)
+
 = 2.2.0 =
 
 * Minor improvements
