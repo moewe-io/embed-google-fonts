@@ -4,14 +4,14 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.2.1
+ * Version: 2.2.2
  * Requires PHP: 7.0
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
  */
 
-define( 'EMBED_GOOGLE_FONTS_VERSION', '2.2.1' );
+define( 'EMBED_GOOGLE_FONTS_VERSION', '2.2.2' );
 
 class Embed_Google_Fonts {
 
@@ -86,7 +86,7 @@ class Embed_Google_Fonts {
 
         if ( ! is_array( $response ) ) {
             /** @var WP_Error response */
-            error_log( $response->get_error_message() );
+            error_log( 'Error getting result: ' . $response->get_error_message() );
             return false;
         }
         $font_definition = json_decode( $response['body'] ); // use the content
@@ -190,7 +190,6 @@ class Embed_Google_Fonts {
     // Thanks: https://stackoverflow.com/a/3338133/1165132
     function rrmdir( $directory ) {
         if ( ! is_dir( $directory ) ) {
-            error_log( "Not a directory: " . $directory );
             return;
         }
         $objects = scandir( $directory );
