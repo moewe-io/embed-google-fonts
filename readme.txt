@@ -3,8 +3,8 @@ Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 5.0
-Tested up to: 5.3.2
-Stable tag: 2.2.0
+Tested up to: 5.4
+Stable tag: 2.2.3
 Requires PHP: 7.0
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -31,6 +31,14 @@ Embed Google Fonts tries to automatically replace registered Google Fonts from t
 
 No, themes and plugins must use wp_enqueue_style to load Google Fonts.
 
+= Does it work with caching plugins? =
+
+Generally yes. You may exclude some files, if there are problems.
+
+= Does it work with WP Rocket? =
+
+Yes, it is working wit WP Rocket.
+
 = Does it work with WP Fastest Cache? =
 
 If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "_font.css"
@@ -44,6 +52,15 @@ Nothing special
 There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 2.2.3 =
+
+* Don't show errors in frontend, when downloading a font didn't worked.
+* Removed version constant, as it isn't used (EMBED_GOOGLE_FONTS_VERSION)
+
+= 2.2.2 =
+
+* Removed unnecessary error log
 
 = 2.2.1 =
 
