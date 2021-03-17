@@ -4,7 +4,7 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.2.3
+ * Version: 2.2.4
  * Requires PHP: 7.0
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
@@ -33,7 +33,7 @@ class Embed_Google_Fonts {
 		/** @var _WP_Dependency $dependency */
 		foreach ( $wp_styles->registered as $key => $dependency ) {
 			// Example https://fonts.googleapis.com/css?family=Lato:300
-			if ( strpos( $dependency->src, 'fonts.googleapis.com' ) === false ) {
+			if ( strpos( $dependency->src, 'fonts.googleapis.com/css' ) === false ) {
 				continue;
 			}
 			$query    = wp_parse_url( $dependency->src, PHP_URL_QUERY );
@@ -100,6 +100,11 @@ class Embed_Google_Fonts {
 			return false;
 		}
 		$font_definition = json_decode( $response['body'] ); // use the content
+        if($font_definition === null){
+            error_log( 'Error getting font definition: ' . $slug );
+            return false;
+        }
+
 		$download_url    = add_query_arg( array(
 			'download' => 'zip',
 			'subsets'  => join( ",", $font_definition->subsets ),
@@ -121,7 +126,6 @@ class Embed_Google_Fonts {
 		if ( is_wp_error( $unzipfile ) ) {
 			/** @var WP_Error $unzipfile */
 			error_log( "Error extracting font file: " . $unzipfile->get_error_message() );
-
 			return false;
 		}
 
@@ -230,4 +234,3 @@ new Embed_Google_Fonts();
 
 // specific theme and plugin support
 include 'includes/avada.php';
-include 'includes/memorable.php';
