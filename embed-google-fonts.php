@@ -155,10 +155,6 @@ class Embed_Google_Fonts {
 			}
 			echo 'src:';
 
-			foreach ( $variant->local as $local ) {
-				echo 'local("' . $local . '"),';
-			}
-
 			$formats = array();
 			foreach (
 				[
