@@ -72,9 +72,11 @@ class Embed_Google_Fonts {
 		if ( is_file( $directory . '_font.css' ) && filemtime( $directory . '_font.css' ) > $max_age ) {
 			return true;
 		}
+        unlink($directory . '_font.css' );
 		$this->rrmdir( $directory );
 		if ( ! wp_mkdir_p( $directory ) ) {
 			error_log( 'Error creating needed directory: ' . $directory );
+
 			return false;
 		}
 		$api_url = 'https://google-webfonts-helper.herokuapp.com/api/fonts/' . $slug;
@@ -101,17 +103,18 @@ class Embed_Google_Fonts {
 			return false;
 		}
 		$font_definition = json_decode( $response['body'] ); // use the content
-        if($font_definition === null){
-            error_log( 'Error getting font definition: ' . $slug );
-            return false;
-        }
+		if ( $font_definition === null ) {
+			error_log( 'Error getting font definition: ' . $slug );
 
-		$download_url    = add_query_arg( array(
+			return false;
+		}
+
+		$download_url = add_query_arg( array(
 			'download' => 'zip',
 			'subsets'  => join( ",", $font_definition->subsets ),
 		), $api_url );
 
-		$download_target = $directory . 'font.zip';
+		$download_target = $directory . 'font' . wp_generate_uuid4() . '.zip';
 
 		// Download the fonts
 		wp_remote_get( $download_url, array(
@@ -127,6 +130,7 @@ class Embed_Google_Fonts {
 		if ( is_wp_error( $unzipfile ) ) {
 			/** @var WP_Error $unzipfile */
 			error_log( "Error extracting font file: " . $unzipfile->get_error_message() );
+
 			return false;
 		}
 
@@ -156,9 +160,11 @@ class Embed_Google_Fonts {
 			}
 			echo 'src:';
 
-			foreach ( $variant->local as $local ) {
-				echo 'local("' . $local . '"),';
-			}
+            if(isset($variant->local) && is_array($variant->local)) {
+	            foreach ( $variant->local as $local ) {
+		            echo 'local("' . $local . '"),';
+	            }
+            }
 
 			$formats = array();
 			foreach (

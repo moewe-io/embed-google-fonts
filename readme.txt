@@ -3,9 +3,9 @@ Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 5.0
-Tested up to: 5.7
-Stable tag: 2.2.4
-Requires PHP: 7.0
+Tested up to: 5.9
+Stable tag: 2.3.0
+Requires PHP: 7.4
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
@@ -52,6 +52,11 @@ Nothing special
 There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 2.3.0 =
+
+* Added missing Oriya subset (#6)
+* Improved stability
 
 = 2.2.4 =
 
