@@ -4,8 +4,8 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.2.4
- * Requires PHP: 7.0
+ * Version: 2.3.0
+ * Requires PHP: 7.4
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
  * Text Domain: embed-google-fonts
@@ -88,7 +88,8 @@ class Embed_Google_Fonts {
 			'greek',
 			'cyrillic',
 			'latin-ext',
-			'hebrew'
+			'hebrew',
+			'oriya'
 		] );
 		$configuration_url = add_query_arg( [ 'subsets' => join( ',', $subsets ) ], $api_url );
 		$response          = wp_remote_get( $configuration_url );
