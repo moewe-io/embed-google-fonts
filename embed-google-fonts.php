@@ -4,7 +4,7 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.3.0
+ * Version: 2.3.1
  * Requires PHP: 7.4
  * Author: MOEWE
  * Author URI: https://www.moewe.io/
@@ -66,14 +66,17 @@ class Embed_Google_Fonts {
 
 	private function download_font( $base_path, $slug ) {
 		$directory                  = $base_path . $slug . '/';
+        $css_file                   = $directory . '_font.css';
 		$expiration_time_in_seconds = apply_filters( 'embed_google_fonts_expiration_time_in_seconds', MONTH_IN_SECONDS );
 		$max_age                    = time() - $expiration_time_in_seconds;
 
-		if ( is_file( $directory . '_font.css' ) && filemtime( $directory . '_font.css' ) > $max_age ) {
+		if ( is_file( $css_file ) && filemtime( $css_file ) > $max_age ) {
 			return true;
 		}
-        unlink($directory . '_font.css' );
-		$this->rrmdir( $directory );
+
+        wp_delete_file( $css_file );
+
+        $this->rrmdir( $directory );
 		if ( ! wp_mkdir_p( $directory ) ) {
 			error_log( 'Error creating needed directory: ' . $directory );
 
@@ -133,8 +136,6 @@ class Embed_Google_Fonts {
 
 			return false;
 		}
-
-		$css_file = $directory . '_font.css';
 
 		ob_start();
 		foreach ( $font_definition->variants as $variant ) {

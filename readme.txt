@@ -53,6 +53,10 @@ There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
 
+= 2.3.1 =
+
+* Avoid warning, when removing not existing file
+
 = 2.3.0 =
 
 * Added missing Oriya subset (#6)
