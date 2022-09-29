@@ -58,7 +58,7 @@ Yes, it is working wit WP Rocket.
 
 = Does it work with WP Fastest Cache? =
 
-If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "_font.css"
+If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "font.css"
 
 == Upgrade Notice ==
 
@@ -75,6 +75,7 @@ There is no ui or something like this. So no screenshots needed.
 * Fonts may be stored locally now and will be loaded from there. This may avoid poor performance, when the remote server isn't available
 * Removed Avada support
 * Renamed "_font.css" to "font.css"
+* Added korean subset (Thanks @phl23)
 
 = 2.3.1 =
 
