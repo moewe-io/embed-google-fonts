@@ -122,6 +122,7 @@ class Embed_Google_Fonts {
 			'cyrillic',
 			'latin-ext',
 			'hebrew',
+			'korean',
 			'oriya'
 		] );
 		$configuration_url = add_query_arg( [ 'subsets' => join( ',', $subsets ) ], $api_url );
