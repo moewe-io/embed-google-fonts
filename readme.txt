@@ -4,7 +4,7 @@ Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 5.0
 Tested up to: 5.9
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 Requires PHP: 7.4
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -19,13 +19,30 @@ Embed Google Fonts tries to automatically replace registered Google Fonts from t
 
 **Notes**
 
-* The first request might be slow, as fonts are downloaded and cached the first time they are requested.
-* This doesn't automatically replaces all your Google fonts with local versions. If a plugin/theme doens't use WordPress wp_enqueue_style it propably won't work.
+* The first request might be very slow, as fonts are downloaded and cached the first time they are requested.
+* This doesn't automatically replace all your Google fonts with local versions. If a plugin/theme doesn't use WordPress wp_enqueue_style it probably won't work.
 * Loaded fonts are not optimized, means, the whole font including all subsets is loaded
+* See FAQ for instructions to use locally hosted fonts directly and avoid using Heroku
 
 **Thank you:** Fonts are downloaded using: [https://google-webfonts-helper.herokuapp.com/fonts](https://google-webfonts-helper.herokuapp.com/fonts)
 
 == Frequently Asked Questions ==
+
+= How to use locally stored fonts directly? =
+
+It is possible to avoid using Heroku and directly use locally hosted fonts.
+
+Easy way:
+
+* Let the plugin download the fonts
+* copy/move the folder "wp-content/cache/embed-google-fonts" to "wp-content/embed-google-fonts"
+
+Custom way:
+
+* Create a folder "embed-google-fonts" in your "wp-content" folder
+* For every font create a subfolder, i.e. "embed-google-fonts/open-sans/"
+* Create a file "embed-google-fonts/open-sans/font.css"
+* Edit your "font.css" to include rules for loading your local font
 
 = Does this work with every theme and plugin? =
 
@@ -52,6 +69,12 @@ Nothing special
 There is no ui or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 2.4.0 =
+
+* Fonts may be stored locally now and will be loaded from there. This may avoid poor performance, when the remote server isn't available
+* Removed Avada support
+* Renamed "_font.css" to "font.css"
 
 = 2.3.1 =
 

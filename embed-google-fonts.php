@@ -4,10 +4,11 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 2.3.1
+ * Version: 2.4.0
+ * Requires at least: 6.0
  * Requires PHP: 7.4
- * Author: MOEWE
- * Author URI: https://www.moewe.io/
+ * Author: Adrian Mörchen
+ * Author URI: https://moerchen.io/
  * Text Domain: embed-google-fonts
  */
 
@@ -23,6 +24,7 @@ class Embed_Google_Fonts {
 		add_filter( 'embed_google_fonts_get_slug', [ $this, 'get_slug' ], 10, 1 );
 		add_filter( 'embed_google_fonts_get_handle', [ $this, 'get_handle' ], 10, 1 );
 		add_filter( 'embed_google_fonts_get_base_directory', [ $this, 'get_base_directory' ], 10, 1 );
+		add_filter( 'embed_google_fonts_get_local_url', [ $this, 'get_local_url' ], 10, 2 );
 	}
 
 	function replace_queued_sources() {
@@ -40,15 +42,21 @@ class Embed_Google_Fonts {
 			$query    = wp_parse_args( $query, array() );
 			$families = explode( '|', $query['family'] );
 			foreach ( $families as $family ) {
-				if ( empty( $family ) ) {
+				if ( empty( $family ) || ! apply_filters( 'embed_google_fonts_download_font', true, $family ) ) {
 					continue;
 				}
 				$family = explode( ':', $family )[0];
 				$slug   = apply_filters( 'embed_google_fonts_get_slug', $family );
-				$this->download_font( $base_directory, $slug );
-				$handle    = apply_filters( 'embed_google_fonts_get_handle', $family );
-				$timestamp = is_file( $base_directory . $slug . '/_font.css' ) ? filemtime( $base_directory . $slug . '/_font.css' ) : time();
-				wp_enqueue_style( $handle, $base_url . $slug . '/_font.css', false, $timestamp );
+				$handle = apply_filters( 'embed_google_fonts_get_handle', $family );
+
+				$version = 'local-' . date( 'Y-m' ); // Invalid at least monthly for local files
+				$src_url = apply_filters( 'embed_google_fonts_get_local_url', false, $slug );
+				if ( ! $src_url ) {
+					$this->download_font( $base_directory, $slug );
+					$version = is_file( $base_directory . $slug . '/font.css' ) ? filemtime( $base_directory . $slug . '/font.css' ) : time();
+					$src_url = $base_url . $slug . '/font.css';
+				}
+				wp_enqueue_style( $handle, $src_url, false, $version );
 			}
 			// Remove original Google font from styles
 			$wp_styles->remove( $key );
@@ -56,17 +64,31 @@ class Embed_Google_Fonts {
 		}
 	}
 
-	function get_slug( $name = '' ) {
-		return strtolower( str_replace( ' ', '-', $name ) );
-	}
-
 	function get_handle( $name = '' ) {
 		return 'embed-google-fonts-' . apply_filters( 'embed_google_fonts_get_slug', $name );
 	}
 
+	function get_slug( $name = '' ) {
+		return strtolower( str_replace( ' ', '-', $name ) );
+	}
+
+	function get_local_url( $src, $slug ) {
+		if ( $src ) {
+			return $src;
+		}
+
+		$possibleCSS = WP_CONTENT_DIR . '/embed-google-fonts/' . $slug . '/font.css';
+
+		if ( is_file( $possibleCSS ) ) {
+			return content_url( '/embed-google-fonts/' . $slug . '/font.css' );
+		}
+
+		return $src;
+	}
+
 	private function download_font( $base_path, $slug ) {
 		$directory                  = $base_path . $slug . '/';
-        $css_file                   = $directory . '_font.css';
+		$css_file                   = $directory . 'font.css';
 		$expiration_time_in_seconds = apply_filters( 'embed_google_fonts_expiration_time_in_seconds', MONTH_IN_SECONDS );
 		$max_age                    = time() - $expiration_time_in_seconds;
 
@@ -74,9 +96,15 @@ class Embed_Google_Fonts {
 			return true;
 		}
 
-        wp_delete_file( $css_file );
+		/** Poor mans locking */
+		if ( get_transient( 'embed-google-fonts-is-downloading-' . $slug ) ) {
+			return true;
+		}
+		set_transient( 'embed-google-fonts-is-download-' . $slug, true, 30 );
 
-        $this->rrmdir( $directory );
+		wp_delete_file( $css_file );
+
+		$this->rrmdir( $directory );
 		if ( ! wp_mkdir_p( $directory ) ) {
 			error_log( 'Error creating needed directory: ' . $directory );
 
@@ -132,7 +160,7 @@ class Embed_Google_Fonts {
 		unlink( $download_target );
 		if ( is_wp_error( $unzipfile ) ) {
 			/** @var WP_Error $unzipfile */
-			error_log( "Error extracting font file: " . $unzipfile->get_error_message() );
+			error_log( "Error extracting font file: " . $slug . " -> " . $unzipfile->get_error_message() );
 
 			return false;
 		}
@@ -140,10 +168,10 @@ class Embed_Google_Fonts {
 		ob_start();
 		foreach ( $font_definition->variants as $variant ) {
 			?>
-            @font-face {
-            font-family: <?= $variant->fontFamily ?>;
-            font-style: <?= $variant->fontStyle ?>;
-            font-weight: <?= $variant->fontWeight ?>;
+			@font-face {
+			font-family: <?= $variant->fontFamily ?>;
+			font-style: <?= $variant->fontStyle ?>;
+			font-weight: <?= $variant->fontWeight ?>;
 			<?php
 			$font_prefix = $slug . '-' . $font_definition->version . '-' . $font_definition->storeID . '-';
 			if ( $variant->fontWeight == 400 ) {
@@ -161,11 +189,11 @@ class Embed_Google_Fonts {
 			}
 			echo 'src:';
 
-            if(isset($variant->local) && is_array($variant->local)) {
-	            foreach ( $variant->local as $local ) {
-		            echo 'local("' . $local . '"),';
-	            }
-            }
+			if ( isset( $variant->local ) && is_array( $variant->local ) ) {
+				foreach ( $variant->local as $local ) {
+					echo 'local("' . $local . '"),';
+				}
+			}
 
 			$formats = array();
 			foreach (
@@ -184,14 +212,17 @@ class Embed_Google_Fonts {
 			}
 			echo join( ',', $formats );
 			?>
-            ;}
+			;}
 			<?php
 		}
 
-		$file = fopen( $css_file, "w" );
-		fwrite( $file, ob_get_clean() );
+		$css_file_content = ob_get_clean();
 		try {
-			if ( $file == false ) {
+			$file = fopen( $css_file, "w" );
+			if ( flock( $file, LOCK_EX ) ) {
+				fwrite( $file, $css_file_content );
+			}
+			if ( ! $file ) {
 				error_log( "Error in opening new file: " . $css_file );
 
 				return false;
@@ -239,6 +270,3 @@ class Embed_Google_Fonts {
 }
 
 new Embed_Google_Fonts();
-
-// specific theme and plugin support
-include 'includes/avada.php';
