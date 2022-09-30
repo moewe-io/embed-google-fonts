@@ -42,8 +42,8 @@ class Embed_Google_Fonts_Proxy {
 				$src_url = apply_filters( 'embed_google_fonts_get_local_url', false, $slug );
 				if ( ! $src_url ) {
 					$this->download_font( $base_directory, $slug );
-					$version = is_file( $base_directory . $slug . '/font.css' ) ? filemtime( $base_directory . $slug . '/font.css' ) : time();
-					$src_url = $base_url . $slug . '/font.css';
+					$version = is_file( $base_directory . $slug . '/_font.css' ) ? filemtime( $base_directory . $slug . '/_font.css' ) : time();
+					$src_url = $base_url . $slug . '/_font.css';
 				}
 				wp_enqueue_style( $handle, $src_url, false, $version );
 			}
@@ -66,10 +66,10 @@ class Embed_Google_Fonts_Proxy {
 			return $src;
 		}
 
-		$possibleCSS = apply_filters( 'embed_google_fonts_get_local_base_directory', false ) . $slug . '/font.css';
+		$possibleCSS = apply_filters( 'embed_google_fonts_get_local_base_directory', false ) . $slug . '/_font.css';
 
 		if ( is_file( $possibleCSS ) ) {
-			return content_url( '/embed-google-fonts/' . $slug . '/font.css' );
+			return content_url( '/embed-google-fonts/' . $slug . '/_font.css' );
 		}
 
 		return $src;
@@ -77,7 +77,7 @@ class Embed_Google_Fonts_Proxy {
 
 	private function download_font( $base_path, $slug ) {
 		$directory                  = $base_path . $slug . '/';
-		$css_file                   = $directory . 'font.css';
+		$css_file                   = $directory . '_font.css';
 		$expiration_time_in_seconds = apply_filters( 'embed_google_fonts_expiration_time_in_seconds', MONTH_IN_SECONDS );
 		$max_age                    = time() - $expiration_time_in_seconds;
 

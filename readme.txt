@@ -4,7 +4,7 @@ Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Requires PHP: 7.4
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -41,8 +41,8 @@ Custom way:
 
 * Create a folder "embed-google-fonts" in your "wp-content" folder
 * For every font create a subfolder, i.e. "embed-google-fonts/open-sans/"
-  * Create a file "embed-google-fonts/open-sans/font.css"
-  * Edit your "font.css" to include rules for loading your local font
+  * Create a file "embed-google-fonts/open-sans/_font.css"
+  * Edit your "_font.css" to include rules for loading your local font
 
 = Does this work with every theme and plugin? =
 
@@ -59,7 +59,7 @@ Yes, it is working with WP Rocket.
 
 = Does it work with WP Fastest Cache? =
 
-If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "font.css"
+If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "_font.css"
 
 == Upgrade Notice ==
 
@@ -70,6 +70,10 @@ Nothing special
 There is no UI or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 3.0.1 =
+
+* Reverted renaming of _font.css (again)
 
 = 3.0.0 =
 

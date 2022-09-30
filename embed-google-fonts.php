@@ -4,7 +4,7 @@
  * Plugin Name: Embed Google Fonts
  * Plugin URI: https://github.com/moewe-io/embed-google-fonts
  * Description: Helper plugin for embedding Google fonts.
- * Version: 3.0.0
+ * Version: 3.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Adrian Mörchen
