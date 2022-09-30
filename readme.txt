@@ -2,9 +2,9 @@
 Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.moewe.io/
-Requires at least: 5.0
-Tested up to: 5.9
-Stable tag: 2.4.0
+Requires at least: 5.9
+Tested up to: 6.1
+Stable tag: 3.0.0
 Requires PHP: 7.4
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -35,18 +35,19 @@ It is possible to avoid using Heroku and directly use locally hosted fonts.
 Easy way:
 
 * Let the plugin download the fonts
-* copy/move the folder "wp-content/cache/embed-google-fonts" to "wp-content/embed-google-fonts"
+  * Click the button in the plugin list overview ;)
 
 Custom way:
 
 * Create a folder "embed-google-fonts" in your "wp-content" folder
 * For every font create a subfolder, i.e. "embed-google-fonts/open-sans/"
-* Create a file "embed-google-fonts/open-sans/font.css"
-* Edit your "font.css" to include rules for loading your local font
+  * Create a file "embed-google-fonts/open-sans/font.css"
+  * Edit your "font.css" to include rules for loading your local font
 
 = Does this work with every theme and plugin? =
 
 No, themes and plugins must use wp_enqueue_style to load Google Fonts.
+Just try it, if it works, than you are fine.
 
 = Does it work with caching plugins? =
 
@@ -54,7 +55,7 @@ Generally yes. You may exclude some files, if there are problems.
 
 = Does it work with WP Rocket? =
 
-Yes, it is working wit WP Rocket.
+Yes, it is working with WP Rocket.
 
 = Does it work with WP Fastest Cache? =
 
@@ -66,16 +67,18 @@ Nothing special
 
 == Screenshots ==
 
-There is no ui or something like this. So no screenshots needed.
+There is no UI or something like this. So no screenshots needed.
 
 == Changelog ==
 
-= 2.4.0 =
+= 3.0.0 =
 
 * Fonts may be stored locally now and will be loaded from there. This may avoid poor performance, when the remote server isn't available
-* Removed Avada support
+  * See FAQ for more information
+* Removed direct Avada support
 * Renamed "_font.css" to "font.css"
 * Added korean subset (Thanks @phl23)
+* Code refactoring
 
 = 2.3.1 =
 
