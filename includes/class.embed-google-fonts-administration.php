@@ -11,14 +11,21 @@ class Embed_Google_Fonts_Administration {
 		$localFolder = apply_filters( 'embed_google_fonts_get_local_base_directory', false );
 
 		if ( ! is_dir( $cacheFolder ) ) {
-			wp_die( esc_js( __( 'No local cache found -> nothing todo yet.', 'embed-google-fonts' ) ) );
+			wp_die( esc_js( __( 'No local cache found → nothing todo yet.', 'embed-google-fonts' ) ) );
 		}
 
 		if ( ! wp_mkdir_p( $localFolder ) ) {
 			wp_die( esc_js( __( 'Error creating local path.', 'embed-google-fonts' ) ) );
 		}
 
+		global $wp_filesystem;
+		if ( ! $wp_filesystem ) {
+			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			WP_Filesystem( false, $cacheFolder );
+		}
+
 		$maybeError = copy_dir( $cacheFolder, $localFolder );
+
 		if ( is_wp_error( $maybeError ) ) {
 			wp_die( $maybeError->get_error_message() );
 		}
