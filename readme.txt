@@ -1,7 +1,7 @@
 === Embed Google Fonts ===
 Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
-Donate link: https://www.moewe.io/
+Donate link: https://www.paypal.com/paypalme/scrobbleme/5
 Requires at least: 5.9
 Tested up to: 6.1
 Stable tag: 3.0.1
@@ -60,6 +60,17 @@ Yes, it is working with WP Rocket.
 = Does it work with WP Fastest Cache? =
 
 If you are using [WP Fastest Cache](https://de.wordpress.org/plugins/wp-fastest-cache/), you should create an exclude CSS rule for "_font.css"
+
+= Does it work with Divi? =
+
+You have to disable
+
+* **Improve Google Fonts Loading** and
+* **Defer jQuery And jQuery Migrate**
+
+in
+
+* **Divi → Theme Options → General → Performance**
 
 == Upgrade Notice ==
 
