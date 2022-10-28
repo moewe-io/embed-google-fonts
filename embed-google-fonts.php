@@ -6,7 +6,7 @@
  * Description: Helper plugin for embedding Google fonts.
  * Version: 3.0.1
  * Requires at least: 6.0
- * Requires PHP: 7.4
+ * Requires PHP: 7.3
  * Author: Adrian Mörchen
  * Author URI: https://moerchen.io/
  * Text Domain: embed-google-fonts

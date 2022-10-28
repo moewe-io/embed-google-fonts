@@ -4,8 +4,8 @@ Tags: google fonts, embed, gdpr
 Donate link: https://www.paypal.com/paypalme/scrobbleme/5
 Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 3.0.1
-Requires PHP: 7.4
+Stable tag: 3.0.2
+Requires PHP: 7.3
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
 
@@ -81,6 +81,11 @@ Nothing special
 There is no UI or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 3.0.2 =
+
+* Allow installation with PHP 7.3, because of high demand (Please note: It is highly recommended to upgrade to newer PHP)
+* Fixed typo (Thanks Jenny)
 
 = 3.0.1 =
 
