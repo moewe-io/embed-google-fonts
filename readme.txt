@@ -82,6 +82,11 @@ There is no UI or something like this. So no screenshots needed.
 
 == Changelog ==
 
+= 3.1.0 =
+
+* Fixed URL to new download server (Thanks brauni85 via Github)
+* Fixed typo in key for locking (Thanks Thomas)
+
 = 3.0.2 =
 
 * Allow installation with PHP 7.3, because of high demand (Please note: It is highly recommended to upgrade to newer PHP)

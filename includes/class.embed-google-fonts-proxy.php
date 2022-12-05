@@ -90,7 +90,7 @@ class Embed_Google_Fonts_Proxy {
 		if ( get_transient( $lock_transient_key ) ) {
 			return true;
 		}
-		set_transient( $lock_transient_key, true, 30 );
+		set_transient( $lock_transient_key, true, 10 );
 
 		wp_delete_file( $css_file );
 
