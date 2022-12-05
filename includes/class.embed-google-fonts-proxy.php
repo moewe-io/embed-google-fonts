@@ -99,7 +99,7 @@ class Embed_Google_Fonts_Proxy {
 
 			return false;
 		}
-		$api_url = 'https://google-webfonts-helper.herokuapp.com/api/fonts/' . $slug;
+		$api_url = 'https://gwfh.mranftl.com/api/fonts' . $slug;
 
 		$subsets           = apply_filters( 'embed_google_fonts_get_subsets', [
 			'devanagari',
