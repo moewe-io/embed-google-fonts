@@ -2,9 +2,9 @@
 Contributors: adrian2k7,moewe, creabrain
 Tags: google fonts, embed, gdpr
 Donate link: https://www.paypal.com/paypalme/scrobbleme/5
-Requires at least: 5.9
-Tested up to: 6.1
-Stable tag: 3.0.2
+Requires at least: 6.1
+Tested up to: 6.5.2
+Stable tag: 3.1.1
 Requires PHP: 7.3
 License: GPL v3
 License URI: http://www.gnu.org/copyleft/gpl.html
@@ -24,7 +24,7 @@ Embed Google Fonts tries to automatically replace registered Google Fonts from t
 * Loaded fonts are not optimized, means, the whole font including all subsets is loaded
 * See FAQ for instructions to use locally hosted fonts directly and avoid using Heroku
 
-**Thank you:** Fonts are downloaded using: [https://google-webfonts-helper.herokuapp.com/fonts](https://google-webfonts-helper.herokuapp.com/fonts)
+**Thank you:** Fonts are downloaded using: [https://gwfh.mranftl.com/fonts](https://gwfh.mranftl.com/fonts)
 
 == Frequently Asked Questions ==
 
@@ -81,6 +81,10 @@ Nothing special
 There is no UI or something like this. So no screenshots needed.
 
 == Changelog ==
+
+= 3.1.1 =
+
+* Improved security: Added a nonce and capability (manage_options) check
 
 = 3.1.0 =
 

@@ -7,6 +7,17 @@ class Embed_Google_Fonts_Administration {
 	}
 
 	function copy_files() {
+
+		$nonce = filter_input( INPUT_GET, 'nonce' );
+
+		if ( ! wp_verify_nonce( $nonce, 'embed_google_fonts_copy_files' ) ) {
+			wp_die( __( 'Nonce check failed', 'embed-google-fonts' ) );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_js( __( 'You are not allowed to copy files.', 'embed-google-fonts' ) ) );
+		}
+
 		$cacheFolder = apply_filters( 'embed_google_fonts_get_base_directory', false );
 		$localFolder = apply_filters( 'embed_google_fonts_get_local_base_directory', false );
 
@@ -56,6 +67,12 @@ class Embed_Google_Fonts_Administration {
 			<script>
 				<?php
 				$confirmation = esc_js( __( 'Are you sure?', 'embed-google-fonts' ) );
+				$url = add_query_arg(
+					[
+						'action' => 'embed_google_fonts_copy_files',
+						'nonce'  => wp_create_nonce( 'embed_google_fonts_copy_files' )
+					],
+					admin_url( 'admin-ajax.php' ) );
 				?>
 
 				function embed_google_fonts_copy_files() {
@@ -63,7 +80,7 @@ class Embed_Google_Fonts_Administration {
 						return;
 					}
 
-					let url = ajaxurl + '?action=embed_google_fonts_copy_files';
+					let url = "<?= $url ?>";
 
 					// Making our request
 					fetch(url, {method: 'GET'})
